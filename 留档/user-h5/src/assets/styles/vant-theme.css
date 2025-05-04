@@ -1,0 +1,53 @@
+/**
+ * Vant 主题变量覆盖
+ * 通过覆盖 Vant 的 CSS 变量，使其与项目设计系统保持一致
+ * 完整的变量列表见: https://github.com/youzan/vant/blob/main/packages/vant/src/style/var.less
+ */
+
+:root {
+  /* 品牌色 */
+  --van-primary-color: var(--primary-color);
+  --van-success-color: var(--success-color);
+  --van-warning-color: var(--warning-color);
+  --van-danger-color: var(--error-color);
+  
+  /* 文本色 */
+  --van-text-color: var(--text-color);
+  --van-text-color-2: var(--text-color-secondary);
+  --van-text-color-3: var(--text-color-light);
+  
+  /* 背景色 */
+  --van-background-color: var(--bg-color);
+  --van-background-color-light: #ffffff;
+  
+  /* 边框 */
+  --van-border-color: var(--border-color);
+  --van-border-radius-sm: var(--border-radius-sm);
+  --van-border-radius-md: var(--border-radius-md);
+  --van-border-radius-lg: var(--border-radius-lg);
+  
+  /* 动画 */
+  --van-animation-duration-base: var(--transition-duration);
+  
+  /* 字体 */
+  --van-font-size-xs: 10px;
+  --van-font-size-sm: 12px;
+  --van-font-size-md: 14px;
+  --van-font-size-lg: 16px;
+  
+  /* TabBar相关样式 */
+  --van-tabbar-height: 50px;
+  --van-tabbar-background-color: #ffffff;
+  
+  /* Button相关样式 */
+  --van-button-default-height: 44px;
+  --van-button-default-font-size: var(--van-font-size-md);
+  --van-button-border-radius: var(--border-radius-md);
+  
+  /* Cell相关样式 */
+  --van-cell-line-height: 24px;
+  --van-cell-padding-vertical: 10px;
+  --van-cell-padding-horizontal: 16px;
+  
+  /* 其他组件样式可按需添加 */
+} 

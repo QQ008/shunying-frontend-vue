@@ -1,0 +1,735 @@
+  /* 拍摄预告页样式文件 */
+  .preview-view {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f5f3ff 0%, #f8f7fc 100%);
+    padding-top: 52px;
+    padding-bottom: 32px;
+    color: #222244;
+
+    --primary: #9966ff;
+    --primary-light: rgba(153, 102, 255, 0.1);
+    --primary-dark: #7840de;
+    --accent: #ff6bc1;
+    --text-primary: #222244;
+    --text-secondary: #666680;
+    --text-tertiary: #8888a0;
+    --background: #f8f7fc;
+    --card-background: #ffffff;
+    --divider: rgba(0, 0, 0, 0.08);
+    --success: #4ad991;
+    --error: #ff5e65;
+  }
+
+
+  /* 自定义导航栏 */
+  .preview-view .custom-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+    z-index: 100;
+  }
+
+  .preview-view .nav-left {
+    display: flex;
+    align-items: center;
+    color: var(--primary);
+    font-weight: 500;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+  }
+
+  .preview-view .nav-left:hover {
+    background-color: rgba(153, 102, 255, 0.1);
+  }
+
+  .preview-view .nav-left svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+  }
+
+  .preview-view .nav-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .preview-view .nav-right {
+    width: 80px; /* 平衡左侧按钮宽度 */
+  }
+
+  /* 容器样式 */
+  .preview-view .preview-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  /* 标题区域 */
+  .preview-view .header-section {
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .preview-view .title-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .preview-view .page-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(120deg, #9966ff, #7840de);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 0.5px;
+  }
+
+  .preview-view .title-decoration {
+    width: 30px;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #9966ff, #7840de);
+    margin-bottom: 8px;
+  }
+
+  .preview-view .subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+
+  /* 筛选器 */
+  .preview-view .filter-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding: 0 4px;
+    justify-content: center;
+  }
+
+  .preview-view .filter-chip {
+    padding: 8px 16px;
+    background-color: white;
+    border-radius: 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid transparent;
+  }
+
+  .preview-view .filter-chip:hover {
+    border-color: rgba(153, 102, 255, 0.3);
+    color: var(--primary);
+  }
+
+  .preview-view .filter-chip.active {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(153, 102, 255, 0.25);
+  }
+
+  /* 加载状态 */
+  .preview-view .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 240px;
+    color: var(--text-secondary);
+  }
+
+  .preview-view .loading-effect {
+    display: flex;
+    margin-bottom: 16px;
+  }
+
+  .preview-view .loading-effect span {
+    width: 12px;
+    height: 12px;
+    margin: 0 4px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.4s infinite ease-in-out both;
+  }
+
+  .preview-view .loading-effect span:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+
+  .preview-view .loading-effect span:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+
+  @keyframes bounce {
+    0%, 80%, 100% {
+      transform: scale(0);
+    }
+    40% {
+      transform: scale(1.0);
+    }
+  }
+
+  /* 空状态 */
+  .preview-view .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    text-align: center;
+  }
+
+  .preview-view .empty-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 24px;
+    color: var(--primary);
+    opacity: 0.7;
+  }
+
+  .preview-view .empty-state h3 {
+    font-size: 20px;
+    margin: 0 0 12px 0;
+    color: var(--text-primary);
+  }
+
+  .preview-view .empty-state p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin: 0 0 24px 0;
+    max-width: 320px;
+  }
+
+  /* 预告时间线 */
+  .preview-view .preview-timeline {
+    padding: 8px 0;
+  }
+
+  .preview-view .timeline-day {
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .preview-view .timeline-day:last-child {
+    margin-bottom: 0;
+  }
+
+  .preview-view .timeline-date {
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .preview-view .date-indicator {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px 6px 6px;
+    background: linear-gradient(120deg, #9966ff, #7840de);
+    color: white;
+    border-radius: 50px;
+    box-shadow: 0 4px 16px rgba(153, 102, 255, 0.25);
+  }
+
+  .preview-view .date-day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: white;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-right: 8px;
+  }
+
+  .preview-view .date-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .preview-view .date-month {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .preview-view .date-weekday {
+    font-size: 12px;
+    opacity: 0.9;
+  }
+
+  .preview-view .timeline-events {
+    margin-left: 20px;
+    position: relative;
+  }
+
+  .preview-view .timeline-events:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -20px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--primary) 0%, rgba(153, 102, 255, 0.1) 100%);
+    z-index: 0;
+  }
+
+  /* 地点分组 */
+  .preview-view .location-group {
+    position: relative;
+    margin-bottom: 28px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
+
+  .preview-view .location-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .preview-view .location-group:before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: -20px;
+    width: 20px;
+    height: 2px;
+    background-color: rgba(153, 102, 255, 0.5);
+    z-index: 1;
+  }
+
+  .preview-view .location-group:after {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: -28px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid var(--primary);
+    transform: translateY(-50%);
+    z-index: 2;
+  }
+
+  .preview-view .location-header {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .preview-view .location-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    color: var(--primary);
+  }
+
+  .preview-view .location-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  /* 摄影师时间安排 */
+  .preview-view .photographer-schedule {
+    padding: 8px 16px 16px;
+  }
+
+  .preview-view .time-axis {
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+  }
+
+  .preview-view .time-markers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+  }
+
+  .preview-view .time-marker {
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .preview-view .hour-label {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+
+  .preview-view .time-slots {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .preview-view .time-slot {
+    position: absolute;
+    top: 0;
+    height: 70px;
+    min-width: 70px;
+    background-color: rgba(153, 102, 255, 0.08);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(153, 102, 255, 0.1);
+  }
+
+  .preview-view .time-slot:hover {
+    background-color: rgba(153, 102, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(153, 102, 255, 0.1);
+  }
+
+  .preview-view .featured-slot {
+    background-color: rgba(153, 102, 255, 0.15);
+    border: 1px solid rgba(153, 102, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(153, 102, 255, 0.1);
+  }
+
+  .preview-view .time-slot-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+  }
+
+  .preview-view .photographer-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .preview-view .slot-info {
+    text-align: center;
+  }
+
+  .preview-view .slot-photographer {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .preview-view .slot-time {
+    font-size: 11px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  /* 详情弹窗 */
+  .preview-view .preview-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+
+  .preview-view .modal-content {
+    background-color: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+
+  .preview-view .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s;
+  }
+
+  .preview-view .modal-close:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .preview-view .modal-close svg {
+    width: 18px;
+    height: 18px;
+    color: var(--text-tertiary);
+  }
+
+  .preview-view .modal-header {
+    padding: 20px;
+    position: relative;
+  }
+
+  .preview-view .modal-status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    padding: 6px 14px;
+    background: linear-gradient(45deg, #9966ff, #7840de);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 0 0 8px 0;
+  }
+
+  .preview-view .modal-location {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    margin-bottom: 12px;
+  }
+
+  .preview-view .modal-location svg {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    color: var(--primary);
+  }
+
+  .preview-view .modal-location h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  .preview-view .modal-time {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-left: 34px;
+  }
+
+  .preview-view .modal-time svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+  }
+
+  .preview-view .time-divider {
+    margin: 0 8px;
+    color: var(--text-tertiary);
+  }
+
+  .preview-view .modal-photographer {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: rgba(153, 102, 255, 0.05);
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .preview-view .modal-photographer:hover {
+    background-color: rgba(153, 102, 255, 0.1);
+  }
+
+  .preview-view .modal-photographer .photographer-avatar {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0;
+    margin-right: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+  }
+
+  .preview-view .photographer-info {
+    flex: 1;
+  }
+
+  .preview-view .photographer-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .preview-view .photographer-title {
+    font-size: 12px;
+    color: var(--primary);
+  }
+
+  .preview-view .view-profile {
+    display: flex;
+    align-items: center;
+    color: var(--text-tertiary);
+    font-size: 13px;
+  }
+
+  .preview-view .view-profile span {
+    margin-right: 4px;
+  }
+
+  .preview-view .view-profile svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .preview-view .modal-description {
+    padding: 20px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .preview-view .modal-description h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    color: var(--text-primary);
+  }
+
+  .preview-view .modal-description p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .preview-view .modal-actions {
+    display: flex;
+    padding: 20px;
+    gap: 12px;
+  }
+
+  .preview-view .action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    outline: none;
+    gap: 8px;
+  }
+
+  .preview-view .action-button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .preview-view .action-button.primary {
+    background: linear-gradient(45deg, #9966ff, #7840de);
+    color: white;
+    box-shadow: 0 4px 12px rgba(153, 102, 255, 0.2);
+    flex: 1;
+  }
+
+  .preview-view .action-button.primary:hover {
+    box-shadow: 0 6px 16px rgba(153, 102, 255, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .preview-view .action-button.secondary {
+    background-color: white;
+    color: var(--primary);
+    border: 1px solid rgba(153, 102, 255, 0.3);
+  }
+
+  .preview-view .action-button.secondary:hover {
+    background-color: rgba(153, 102, 255, 0.05);
+    border-color: rgba(153, 102, 255, 0.5);
+  }
+
+  /* 响应式调整 */
+  @media (min-width: 768px) {
+    .preview-view .preview-container {
+      padding: 32px;
+    }
+
+    .preview-view .modal-actions {
+      flex-direction: row;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .preview-view .modal-actions {
+      flex-direction: column;
+    }
+
+    .preview-view .action-button {
+      width: 100%;
+    }
+  }

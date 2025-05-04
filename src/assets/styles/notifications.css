@@ -1,0 +1,415 @@
+/* 通知中心样式 */
+.notification-center {
+  min-height: 100vh;
+  background-color: #f8f8fa;
+  padding-bottom: 70px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 自定义顶部栏 */
+.notification-center .custom-header {
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.notification-center .back-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.notification-center .back-button:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.notification-center .back-button:active {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.notification-center .page-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.notification-center .right-placeholder {
+  width: 36px;
+}
+
+/* 通知类型图标按钮区样式 */
+.notification-center .notification-category {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  padding: 16px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.notification-center .category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.notification-center .category-item.active .category-icon {
+  background-color: #f0e6ff;
+}
+
+.notification-center .category-item.active .category-name {
+  color: #9966FF;
+  font-weight: 500;
+}
+
+.notification-center .category-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background-color: #f6f6f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.notification-center .category-item:active .category-icon {
+  transform: scale(0.95);
+}
+
+.notification-center .category-name {
+  font-size: 12px;
+  color: #666;
+}
+
+.notification-center .category-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #FF5C5C;
+  color: white;
+  font-size: 10px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid white;
+  font-weight: 500;
+}
+
+/* 通知容器 */
+.notification-center .notifications-container {
+  flex: 1;
+  padding: 10px 16px;
+}
+
+/* 空状态 */
+.notification-center .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+.notification-center .empty-icon {
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.notification-center .empty-text {
+  color: #999;
+  font-size: 14px;
+}
+
+/* 时间分割线 */
+.notification-center .time-divider {
+  color: #999;
+  font-size: 12px;
+  margin: 16px 0 10px;
+  padding-left: 8px;
+}
+
+/* 通知项 */
+.notification-center .notification-item {
+  display: flex;
+  padding: 16px;
+  background-color: white;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.notification-center .notification-item:active {
+  transform: scale(0.98);
+}
+
+.notification-center .notification-item.unread {
+  background-color: #f6f1ff;
+}
+
+.notification-center .notification-item.important:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background-color: #9966FF;
+  border-radius: 2px;
+}
+
+.notification-center .notification-icon {
+  margin-right: 12px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.notification-center .notification-content {
+  flex: 1;
+}
+
+.notification-center .notification-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 6px 0;
+}
+
+.notification-center .notification-description {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 8px 0;
+  line-height: 1.5;
+}
+
+.notification-center .notification-time {
+  font-size: 12px;
+  color: #999;
+}
+
+.notification-center .notification-status {
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.notification-center .unread-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #FF5C5C;
+}
+
+/* 适配大屏设备 */
+@media (min-width: 768px) {
+  .notification-center .notifications-container,
+  .notification-center .messages-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+/* 类型特定图标颜色 */
+.notification-center .notification-icon.system svg path {
+  stroke: #9966FF;
+}
+
+.notification-center .notification-icon.order svg path {
+  stroke: #9966FF;
+}
+
+.notification-center .notification-icon.activity svg path {
+  stroke: #9966FF;
+}
+
+/* 消息功能区域 - 整合自 messages.css */
+.notification-center .messages-container {
+  flex: 1;
+  padding: 10px 16px;
+}
+
+.notification-center .chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification-center .chat-item {
+  display: flex;
+  padding: 12px 16px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.15s ease;
+  position: relative;
+}
+
+.notification-center .chat-item:active {
+  transform: scale(0.98);
+}
+
+.notification-center .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  margin-right: 12px;
+  background-color: #f0f0f0;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.notification-center .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.notification-center .chat-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0; /* 确保可以收缩 */
+}
+
+.notification-center .chat-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.notification-center .chat-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.notification-center .chat-time {
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+
+.notification-center .chat-preview {
+  font-size: 14px;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.notification-center .unread-indicator {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+}
+
+.notification-center .unread-count {
+  background-color: #9966FF;
+  color: white;
+  font-size: 12px;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+}
+
+/* 客服提示区域 */
+.notification-center .customer-service {
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.notification-center .service-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.notification-center .service-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.notification-center .service-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.notification-center .service-list {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.notification-center .service-list::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+}
+
+.notification-center .service-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 72px;
+  cursor: pointer;
+}
+
+.notification-center .service-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  background-color: #f6f1ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.notification-center .service-name {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+}

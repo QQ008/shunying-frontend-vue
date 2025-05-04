@@ -1,0 +1,75 @@
+Date : 2025-05-03 18:43:39
+Directory : c:\Users\15701\Desktop\ceshits\src
+Total : 39 files,  8436 codes, 661 comments, 1287 blanks, all 10384 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| Vue.js     |         16 |      4,306 |        422 |        634 |      5,362 |
+| CSS        |         10 |      2,911 |         77 |        476 |      3,464 |
+| TypeScript |         13 |      1,219 |        162 |        177 |      1,558 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                        | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                           |         39 |      8,436 |        661 |      1,287 |     10,384 |
+| . (Files)                                                                   |          3 |        106 |          6 |         19 |        131 |
+| api                                                                         |          2 |        201 |         32 |         28 |        261 |
+| assets                                                                      |         10 |      2,911 |         77 |        476 |      3,464 |
+| assets (Files)                                                              |          4 |        764 |         28 |        132 |        924 |
+| assets\styles                                                               |          6 |      2,147 |         49 |        344 |      2,540 |
+| components                                                                  |          7 |      1,892 |        220 |        303 |      2,415 |
+| composables                                                                 |          4 |        594 |         76 |         80 |        750 |
+| router                                                                      |          1 |         68 |          2 |          6 |         76 |
+| stores                                                                      |          4 |        334 |         46 |         57 |        437 |
+| views                                                                       |          8 |      2,330 |        202 |        318 |      2,850 |
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                    | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\15701\Desktop\ceshits\src\App.vue                                  | Vue.js     |         84 |          0 |         13 |         97 |
+| c:\Users\15701\Desktop\ceshits\src\api\index.ts                             | TypeScript |         50 |          9 |          4 |         63 |
+| c:\Users\15701\Desktop\ceshits\src\api\photoService.ts                      | TypeScript |        151 |         23 |         24 |        198 |
+| c:\Users\15701\Desktop\ceshits\src\assets\FilterPantel.css                  | CSS        |        370 |         10 |         64 |        444 |
+| c:\Users\15701\Desktop\ceshits\src\assets\HomeView.css                      | CSS        |        293 |         15 |         49 |        357 |
+| c:\Users\15701\Desktop\ceshits\src\assets\base.css                          | CSS        |         71 |          2 |         14 |         87 |
+| c:\Users\15701\Desktop\ceshits\src\assets\main.css                          | CSS        |         30 |          1 |          5 |         36 |
+| c:\Users\15701\Desktop\ceshits\src\assets\styles\PreviewView.css            | CSS        |        627 |         12 |         97 |        736 |
+| c:\Users\15701\Desktop\ceshits\src\assets\styles\chat.css                   | CSS        |        197 |          4 |         34 |        235 |
+| c:\Users\15701\Desktop\ceshits\src\assets\styles\imageGroupDetail.css       | CSS        |        460 |         12 |         75 |        547 |
+| c:\Users\15701\Desktop\ceshits\src\assets\styles\notification-indicator.css | CSS        |         37 |          6 |          5 |         48 |
+| c:\Users\15701\Desktop\ceshits\src\assets\styles\notifications.css          | CSS        |        348 |         11 |         57 |        416 |
+| c:\Users\15701\Desktop\ceshits\src\assets\styles\profileView.css            | CSS        |        478 |          4 |         76 |        558 |
+| c:\Users\15701\Desktop\ceshits\src\components\FilterPanel.vue               | Vue.js     |        695 |        102 |         94 |        891 |
+| c:\Users\15701\Desktop\ceshits\src\components\FullScreenViewer.vue          | Vue.js     |        466 |         68 |         91 |        625 |
+| c:\Users\15701\Desktop\ceshits\src\components\ImageViewer.vue               | Vue.js     |        255 |         25 |         46 |        326 |
+| c:\Users\15701\Desktop\ceshits\src\components\LoginModal.vue                | Vue.js     |        177 |          4 |         24 |        205 |
+| c:\Users\15701\Desktop\ceshits\src\components\TabBar.vue                    | Vue.js     |        108 |          5 |         13 |        126 |
+| c:\Users\15701\Desktop\ceshits\src\components\Toast.vue                     | Vue.js     |         87 |         11 |         17 |        115 |
+| c:\Users\15701\Desktop\ceshits\src\components\TopBar.vue                    | Vue.js     |        104 |          5 |         18 |        127 |
+| c:\Users\15701\Desktop\ceshits\src\composables\useAuth.ts                   | TypeScript |        109 |         27 |         23 |        159 |
+| c:\Users\15701\Desktop\ceshits\src\composables\useImageDetail.ts            | TypeScript |        265 |         15 |         23 |        303 |
+| c:\Users\15701\Desktop\ceshits\src\composables\useNotifications.ts          | TypeScript |        154 |         16 |         17 |        187 |
+| c:\Users\15701\Desktop\ceshits\src\composables\useToast.ts                  | TypeScript |         66 |         18 |         17 |        101 |
+| c:\Users\15701\Desktop\ceshits\src\main.ts                                  | TypeScript |         17 |          5 |          5 |         27 |
+| c:\Users\15701\Desktop\ceshits\src\router\index.ts                          | TypeScript |         68 |          2 |          6 |         76 |
+| c:\Users\15701\Desktop\ceshits\src\shims-vue.d.ts                           | TypeScript |          5 |          1 |          1 |          7 |
+| c:\Users\15701\Desktop\ceshits\src\stores\counter.ts                        | TypeScript |         10 |          0 |          3 |         13 |
+| c:\Users\15701\Desktop\ceshits\src\stores\imageStore.ts                     | TypeScript |         27 |          3 |          6 |         36 |
+| c:\Users\15701\Desktop\ceshits\src\stores\searchStore.ts                    | TypeScript |        244 |         39 |         39 |        322 |
+| c:\Users\15701\Desktop\ceshits\src\stores\user.ts                           | TypeScript |         53 |          4 |          9 |         66 |
+| c:\Users\15701\Desktop\ceshits\src\views\ChatView.vue                       | Vue.js     |        310 |         15 |         52 |        377 |
+| c:\Users\15701\Desktop\ceshits\src\views\ExploreView.vue                    | Vue.js     |        247 |         12 |         46 |        305 |
+| c:\Users\15701\Desktop\ceshits\src\views\HomeView.vue                       | Vue.js     |        146 |         13 |         15 |        174 |
+| c:\Users\15701\Desktop\ceshits\src\views\ImageGroupDetailView.vue           | Vue.js     |        177 |          8 |         13 |        198 |
+| c:\Users\15701\Desktop\ceshits\src\views\NotificationsView.vue              | Vue.js     |        389 |         23 |         31 |        443 |
+| c:\Users\15701\Desktop\ceshits\src\views\PreviewView.vue                    | Vue.js     |        434 |         48 |         65 |        547 |
+| c:\Users\15701\Desktop\ceshits\src\views\ProfileView.vue                    | Vue.js     |        196 |         23 |         23 |        242 |
+| c:\Users\15701\Desktop\ceshits\src\views\SearchView.vue                     | Vue.js     |        431 |         60 |         73 |        564 |
+| Total                                                                       |            |      8,436 |        661 |      1,287 |     10,384 |
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
