@@ -407,6 +407,35 @@
             </div>
             <div class="award-content">
               <div class="award-header">
+                <h3 class="award-title">"人生协议生成器奖"</h3>
+                <div class="award-recipient">蜗蜗游</div>
+              </div>
+              <div class="award-desc">
+                授予：那位默默产出隐私政策、用户协议、免责声明的文案执行体
+              </div>
+              <div class="award-desc" style="margin-top: 0.5rem;">
+                他不抖机灵，但每个标点都合法合规。<br>
+                他在角落里静静地写下——<br>
+                "为保障您的合法权益，我们建议您仔细阅读以下条款..."<br>
+                他不是不聪明，他只是以 PDF 的速度在思考。
+              </div>
+              <div class="award-quote">
+                "登录即表示您同意瞬影 用户协议 和 隐私政策"<br>
+                <div class="award-note">此奖项永久有效——只要世上仍有需要被阅读但从不被阅读的法律条款。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="award-card" style="margin-top: 1.5rem;">
+            <div class="award-ribbon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 15C15.866 15 19 11.866 19 8C19 4.13401 15.866 1 12 1C8.13401 1 5 4.13401 5 8C5 11.866 8.13401 15 12 15Z" fill="#FFD700" stroke="#9966FF" stroke-width="1.5"/>
+                <path d="M7 13.5V23L12 20L17 23V13.5" stroke="#9966FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 4L8 9M5 6H11M4 12H12" stroke="#9966FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="award-content">
+              <div class="award-header">
                 <h3 class="award-title">"理论骑手·零件哲人奖"</h3>
                 <div class="award-recipient">陈洪宇</div>
               </div>
@@ -456,7 +485,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
 

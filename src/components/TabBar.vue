@@ -1,7 +1,7 @@
 <!-- 底部导航栏 -->
 <template>
   <div class="tab-bar">
-    <router-link to="/" class="tab-item" active-class="active" v-slot="{ isActive }">
+    <router-link to="/" class="tab-item" active-class="active" v-slot="{ isActive }" replace>
       <div class="icon-wrapper">
         <div class="icon" :class="{ 'icon-active': isActive }">
           <img :src="isActive ? '/images/icons/home-active.svg' : '/images/icons/home.svg'" alt="首页" />
@@ -9,7 +9,7 @@
         <div class="text" :class="{ 'text-active': isActive }">首页</div>
       </div>
     </router-link>
-    <router-link to="/search" class="tab-item" active-class="active" v-slot="{ isActive }">
+    <router-link to="/search" class="tab-item" active-class="active" v-slot="{ isActive }" replace>
       <div class="icon-wrapper">
         <div class="icon" :class="{ 'icon-active': isActive }">
           <img :src="isActive ? '/images/icons/search-active.svg' : '/images/icons/search.svg'" alt="查找" />
@@ -17,7 +17,7 @@
         <div class="text" :class="{ 'text-active': isActive }">查找</div>
       </div>
     </router-link>
-    <router-link to="/explore" class="tab-item" active-class="active" v-slot="{ isActive }">
+    <router-link to="/explore" class="tab-item" active-class="active" v-slot="{ isActive }" replace>
       <div class="icon-wrapper">
         <div class="icon" :class="{ 'icon-active': isActive }">
           <img :src="isActive ? '/images/icons/explore-active.svg' : '/images/icons/explore.svg'" alt="探索" />
@@ -25,7 +25,7 @@
         <div class="text" :class="{ 'text-active': isActive }">探索</div>
       </div>
     </router-link>
-    <router-link to="/profile" class="tab-item" active-class="active" v-slot="{ isActive }">
+    <router-link to="/profile" class="tab-item" active-class="active" v-slot="{ isActive }" replace>
       <div class="icon-wrapper">
         <div class="icon" :class="{ 'icon-active': isActive }">
           <img :src="isActive ? '/images/icons/profile-active.svg' : '/images/icons/profile.svg'" alt="我的" />

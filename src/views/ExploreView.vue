@@ -107,7 +107,7 @@ const handleLogout = () => {
 
 <style scoped>
 .explore-view {
-  min-height: 100vh;
+  min-height: 80vh;
   padding-top: 60px;
   display: flex;
   flex-direction: column;

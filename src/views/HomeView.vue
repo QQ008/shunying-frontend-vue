@@ -44,7 +44,7 @@ const activeSpotIndex = ref(-1);
 const goToSearch = () => {
   isSearchActive.value = true;
   setTimeout(() => {
-    router.push('/search');
+    router.replace('/search');
     isSearchActive.value = false;
   }, 150);
 };

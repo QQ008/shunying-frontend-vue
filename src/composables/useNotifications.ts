@@ -1,5 +1,5 @@
 // [消息中心]通知中心
-import { ref, computed } from 'vue';
+import { ref, computed, watchEffect } from 'vue';
 import { parseISO, isToday, isThisWeek, format } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
 
@@ -13,9 +13,46 @@ export interface Notification {
   isImportant: boolean;
 }
 
-export function useNotifications() {
-  // 模拟通知数据，实际项目中应该从API获取
-  const notifications = ref<Notification[]>([
+// 使用单例模式确保所有组件共享同一份通知数据
+const notifications = ref<Notification[]>([]);
+const isInitialized = ref(false);
+
+// 本地存储键名
+const STORAGE_KEY = 'notifications_data';
+
+// 初始化通知数据
+const initNotifications = () => {
+  if (isInitialized.value) return;
+
+  try {
+    // 尝试从localStorage读取通知数据
+    const storedData = localStorage.getItem(STORAGE_KEY);
+    if (storedData) {
+      // 合并已存储的已读状态与默认数据
+      const parsedData = JSON.parse(storedData);
+      // 使用默认通知数据，但应用已存储的已读状态
+      getDefaultNotifications().forEach(notification => {
+        const storedNotification = parsedData.find((n: Notification) => n.id === notification.id);
+        if (storedNotification) {
+          notification.isRead = storedNotification.isRead;
+        }
+      });
+    }
+  } catch (error) {
+    console.error('读取通知数据失败', error);
+  }
+
+  // 如果没有存储的数据或发生错误，使用默认数据
+  if (notifications.value.length === 0) {
+    notifications.value = getDefaultNotifications();
+  }
+
+  isInitialized.value = true;
+};
+
+// 获取默认通知数据
+const getDefaultNotifications = (): Notification[] => {
+  return [
     {
       id: 1,
       type: 'system',
@@ -79,7 +116,30 @@ export function useNotifications() {
       isRead: true,
       isImportant: false
     }
-  ]);
+  ];
+};
+
+// 将通知数据保存到本地存储
+const saveNotificationsToStorage = () => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(notifications.value));
+  } catch (error) {
+    console.error('保存通知数据失败', error);
+  }
+};
+
+export function useNotifications() {
+  // 确保初始化只执行一次
+  if (!isInitialized.value) {
+    initNotifications();
+
+    // 监听通知状态变化，自动保存到本地存储
+    watchEffect(() => {
+      if (isInitialized.value && notifications.value.length > 0) {
+        saveNotificationsToStorage();
+      }
+    });
+  }
 
   // 获取未读通知总数
   const unreadCount = computed(() => {
@@ -123,8 +183,11 @@ export function useNotifications() {
   // 将通知标记为已读
   const markAsRead = (id: number) => {
     const notification = notifications.value.find(n => n.id === id);
-    if (notification) {
+    if (notification && !notification.isRead) {
       notification.isRead = true;
+
+      // 保存到本地存储
+      saveNotificationsToStorage();
 
       // 这里应该调用后端API更新通知状态
       // 示例: api.updateNotification(id, { isRead: true });
@@ -152,8 +215,13 @@ export function useNotifications() {
       });
     }
 
-    // 这里应该调用后端API批量更新通知状态
-    // 示例: if (updatedIds.length > 0) api.markNotificationsAsRead(updatedIds);
+    if (updatedIds.length > 0) {
+      // 保存到本地存储
+      saveNotificationsToStorage();
+
+      // 这里应该调用后端API批量更新通知状态
+      // 示例: if (updatedIds.length > 0) api.markNotificationsAsRead(updatedIds);
+    }
   };
 
   // 获取通知列表，可按类型过滤
@@ -181,6 +249,7 @@ export function useNotifications() {
     markAsRead,
     markAllAsRead,
     getNotifications,
-    getNotificationById
+    getNotificationById,
+    initNotifications
   };
 }

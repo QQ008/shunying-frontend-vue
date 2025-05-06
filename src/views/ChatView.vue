@@ -94,20 +94,29 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { format } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
+import { useMessages } from '@/composables/useMessages';
 import '@/assets/styles/chat.css';
 
 const router = useRouter();
 const route = useRoute();
-const chatId = route.params.id;
+const chatId = route.params.id as string;
 const newMessage = ref('');
+const messages = useMessages();
 
 // 根据聊天ID获取聊天名称
 const chatName = computed(() => {
   if (chatId === 'customer-service') return '在线客服';
   if (chatId === 'feedback') return '反馈中心';
   if (chatId === 'order-service') return '订单咨询';
-  if (chatId === '1') return '客服小瞬';
-  if (chatId === '2') return '张摄影师';
+
+  // 尝试从消息系统中获取聊天名称
+  if (!isNaN(Number(chatId))) {
+    const conversation = messages.getConversation(Number(chatId));
+    if (conversation) {
+      return conversation.name;
+    }
+  }
+
   return '聊天';
 });
 
@@ -125,9 +134,13 @@ const formatDate = (date: Date) => {
 const sendMessage = () => {
   if (newMessage.value.trim().length === 0) return;
 
+  // 如果是数字ID的对话，使用全局消息管理系统
+  if (!isNaN(Number(chatId))) {
+    messages.addMessage(Number(chatId), newMessage.value, false);
+  }
+
   // 在实际项目中，这里应该调用API发送消息
   // 例如：api.sendMessage(chatId, newMessage.value);
-  // 同时需要更新未读状态，以确保正确的已读反馈
 
   // 清空输入框
   newMessage.value = '';
@@ -135,6 +148,11 @@ const sendMessage = () => {
 
 // 组件挂载时
 onMounted(() => {
+  // 将当前对话标记为已读
+  if (!isNaN(Number(chatId))) {
+    messages.markConversationAsRead(Number(chatId));
+  }
+
   // 在实际项目中，这里应该从API获取聊天历史
   // 例如：fetchChatHistory(chatId);
 });

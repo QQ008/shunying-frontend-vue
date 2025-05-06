@@ -1,4 +1,9 @@
-// 用户认证模块
+/**
+ * 用户认证模块
+ *
+ * 注意：这是项目中管理用户认证状态的唯一方法
+ * 请勿使用其他方式（如 Pinia store）来管理用户登录状态，以免造成状态不一致
+ */
 import { ref, reactive, readonly } from 'vue';
 
 // 用户信息接口
@@ -51,7 +56,10 @@ const userInfo = reactive<UserInfo>({...defaultUserInfo});
 const isLoading = ref(false);
 const loginError = ref<string | null>(null);
 
-// 读取本地存储的登录状态
+/**
+ * 读取本地存储的登录状态
+ * 在应用启动时自动调用
+ */
 const initAuthState = () => {
   try {
     const savedUser = localStorage.getItem('user_info');
@@ -67,13 +75,28 @@ const initAuthState = () => {
   }
 };
 
-// 保存用户信息到本地存储
+/**
+ * 保存用户信息到本地存储
+ * 在用户信息更新时调用
+ */
 const saveUserInfo = () => {
   localStorage.setItem('user_info', JSON.stringify(userInfo));
 };
 
 /**
  * 提供用户认证相关功能的组合式函数
+ *
+ * 示例用法:
+ * const auth = useAuth();
+ *
+ * // 检查用户是否登录
+ * if (auth.userInfo.isLoggedIn) { ... }
+ *
+ * // 手机号登录
+ * await auth.loginWithPhone('13800138000', '1234');
+ *
+ * // 登出
+ * auth.logout();
  */
 export function useAuth() {
   // 初始化认证状态

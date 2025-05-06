@@ -61,151 +61,49 @@
 
         <!-- 预告列表（按日期分组） -->
         <div class="preview-timeline">
-          <div
+          <preview-day-card
             v-for="(dateGroup, dateIndex) in filteredPreviewDays"
             :key="dateIndex"
-            class="timeline-day"
-          >
-            <div class="timeline-date">
-              <div class="date-indicator">
-                <span class="date-day">{{ formatDay(dateGroup.date) }}</span>
-                <div class="date-details">
-                  <span class="date-month">{{ formatMonth(dateGroup.date) }}</span>
-                  <span class="date-weekday">{{ formatWeekday(dateGroup.date) }}</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- 当日拍摄地点分组 -->
-            <div class="timeline-events">
-              <div
-                v-for="(locationGroup, locIndex) in groupByLocation(dateGroup.items)"
-                :key="locIndex"
-                class="location-group"
-              >
-                <div class="location-header">
-                  <div class="location-icon">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M12 22C16 18 20 14.4183 20 10C20 5.58172 16.4183 2 12 2C7.58172 2 4 5.58172 4 10C4 14.4183 8 18 12 22Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
-                  <h3 class="location-title">{{ locationGroup.location }}</h3>
-                </div>
-
-                <!-- 同一地点的摄影师拍摄安排 -->
-                <div class="photographer-schedule">
-                  <!-- 时间轴 -->
-                  <div class="time-axis">
-                    <div class="time-markers">
-                      <div class="time-marker" v-for="hour in 24" :key="hour" :style="{ left: `${(hour-1) * 4.17}%` }">
-                        <div class="hour-label" v-if="hour % 3 === 0">{{ hour.toString().padStart(2, '0') }}:00</div>
-                      </div>
-                    </div>
-                    <div class="time-slots">
-                      <div
-                        v-for="(item, itemIndex) in locationGroup.items"
-                        :key="itemIndex"
-                        class="time-slot"
-                        :class="{'featured-slot': item.isFeatured}"
-                        :style="getTimeSlotStyle(item)"
-                        @click="showPreviewDetails(item)"
-                      >
-                        <div class="time-slot-content">
-                          <div class="photographer-avatar" :style="getRandomGradient(item.photographerId)">
-                            {{ getInitials(item.photographerName) }}
-                          </div>
-                          <div class="slot-info">
-                            <div class="slot-photographer">{{ item.photographerName }}</div>
-                            <div class="slot-time">{{ formatTimeRange(item.startTime, item.endTime) }}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            :date-group="dateGroup"
+            :weather="getWeatherForDate(dateGroup.date)"
+            @show-details="showPreviewDetails"
+          />
         </div>
       </div>
     </div>
 
     <!-- 预告详情弹窗 -->
-    <div class="preview-modal" v-if="selectedPreview" @click="closePreviewDetails">
-      <div class="modal-content" @click.stop>
-        <div class="modal-close" @click="closePreviewDetails">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-
-        <div class="modal-header">
-          <div class="modal-status" v-if="selectedPreview.isFeatured">推荐拍摄</div>
-          <div class="modal-location">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12 22C16 18 20 14.4183 20 10C20 5.58172 16.4183 2 12 2C7.58172 2 4 5.58172 4 10C4 14.4183 8 18 12 22Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <h2>{{ selectedPreview.locationName }}</h2>
-          </div>
-          <div class="modal-time">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>{{ formatModalDate(selectedPreview.startTime) }}</span>
-            <span class="time-divider">|</span>
-            <span>{{ formatTimeRange(selectedPreview.startTime, selectedPreview.endTime) }}</span>
-          </div>
-        </div>
-
-        <div class="modal-photographer" @click="goToPhotographerPage(selectedPreview.photographerId)">
-          <div class="photographer-avatar" :style="getRandomGradient(selectedPreview.photographerId)">
-            {{ getInitials(selectedPreview.photographerName) }}
-          </div>
-          <div class="photographer-info">
-            <div class="photographer-name">{{ selectedPreview.photographerName }}</div>
-            <div class="photographer-title">专业摄影师</div>
-          </div>
-          <div class="view-profile">
-            <span>查看主页</span>
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-
-        <div class="modal-description" v-if="selectedPreview.description">
-          <h3>拍摄备注</h3>
-          <p>{{ selectedPreview.description }}</p>
-        </div>
-
-        <div class="modal-actions">
-          <button class="action-button secondary" @click="viewOriginalPost(selectedPreview.id)">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 17L17 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M7 7H17V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            查看原文
-          </button>
-          <button class="action-button primary">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            加入日历
-          </button>
-        </div>
-      </div>
-    </div>
+    <preview-detail-modal
+      v-if="selectedPreview"
+      :preview="selectedPreview"
+      @close="closePreviewDetails"
+      @go-to-photographer="goToPhotographerPage"
+      @view-original="viewOriginalPost"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import '@/assets/styles/PreviewView.css';
+import '@/assets/styles/previewother.css';
+import PreviewDayCard from '@/components/preview/PreviewDayCard.vue';
+import PreviewDetailModal from '@/components/preview/PreviewDetailModal.vue';
 
+interface WeatherInfo {
+  date: Date;
+  condition: string; // sunny, cloudy, rainy, etc.
+  temperature: {
+    low: number;
+    high: number;
+  }
+  icon: string;
+}
+
+interface SocialMedia {
+  platform: string; // instagram, weibo, xiaohongshu, etc.
+  url: string;
+  username: string;
+}
 
 interface PreviewItem {
   id: number;
@@ -216,15 +114,15 @@ interface PreviewItem {
   photographerName: string;
   description?: string;
   isFeatured?: boolean;
+  source?: 'platform' | 'friendlybusinessman' | 'xiaohongshu' | 'other'; // 拍摄来源
+  sourceLabel?: string; // 来源标签显示内容
+  originalPostUrl?: string; // 原始发布链接
+  socialMediaLinks?: SocialMedia[]; // 社交媒体链接
+  articleId?: number; // 平台内预告文章ID
 }
 
 interface DateGroup {
   date: Date;
-  items: PreviewItem[];
-}
-
-interface LocationGroup {
-  location: string;
   items: PreviewItem[];
 }
 
@@ -233,6 +131,7 @@ const loading = ref(true);
 const previewList = ref<PreviewItem[]>([]);
 const selectedPreview = ref<PreviewItem | null>(null);
 const activeFilter = ref('all');
+const weatherData = ref<WeatherInfo[]>([]);
 
 // 筛选条件
 const filters = [
@@ -298,63 +197,10 @@ const filteredPreviewDays = computed<DateGroup[]>(() => {
   return Object.values(groups).sort((a, b) => a.date.getTime() - b.date.getTime());
 });
 
-// 按地点分组
-const groupByLocation = (items: PreviewItem[]): LocationGroup[] => {
-  const groups: Record<string, LocationGroup> = {};
-
-  items.forEach(item => {
-    if (!groups[item.locationName]) {
-      groups[item.locationName] = {
-        location: item.locationName,
-        items: []
-      };
-    }
-
-    groups[item.locationName].items.push(item);
-  });
-
-  // 转换为数组并按时间排序
-  return Object.values(groups).map(group => {
-    group.items.sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
-    return group;
-  });
-};
-
-// 获取时间槽样式
-const getTimeSlotStyle = (item: PreviewItem) => {
-  // 计算开始时间在一天内的百分比位置
-  const startHour = item.startTime.getHours();
-  const startMinute = item.startTime.getMinutes();
-  const startPercent = (startHour + startMinute / 60) * 4.17; // 4.17% = 100% / 24小时
-
-  // 计算持续时间的宽度百分比
-  const durationHours = (item.endTime.getTime() - item.startTime.getTime()) / (1000 * 60 * 60);
-  const widthPercent = durationHours * 4.17;
-
-  return {
-    left: `${startPercent}%`,
-    width: `${widthPercent}%`
-  };
-};
-
-// 获取摄影师姓名首字母
-const getInitials = (name: string): string => {
-  return name.charAt(0);
-};
-
-// 随机头像背景 - 根据摄影师ID生成固定的渐变色
-const getRandomGradient = (photographerId: number) => {
-  const gradients = [
-    'linear-gradient(45deg, #9966ff, #7333ff)',
-    'linear-gradient(45deg, #8c52ff, #b04eff)',
-    'linear-gradient(45deg, #6539ff, #9e2fff)',
-    'linear-gradient(45deg, #b252ff, #7913ff)',
-    'linear-gradient(45deg, #9966ff, #612aff)'
-  ];
-
-  // 使用摄影师ID来选择固定的渐变色
-  const index = photographerId % gradients.length;
-  return { background: gradients[index] };
+// 获取指定日期的天气信息
+const getWeatherForDate = (date: Date): WeatherInfo | null => {
+  const dateStr = date.toISOString().split('T')[0];
+  return weatherData.value.find(w => w.date.toISOString().split('T')[0] === dateStr) || null;
 };
 
 // 获取空状态消息
@@ -386,53 +232,60 @@ const goBack = () => {
   window.history.back();
 };
 
-// 跳转到摄影师主页（仅预留功能）
+// 跳转到摄影师主页
 const goToPhotographerPage = (photographerId: number) => {
   console.log(`跳转到摄影师主页，ID: ${photographerId}`);
   // 实际开发时此处添加路由跳转逻辑
 };
 
-// 跳转到原文（仅预留功能）
+// 跳转到原文
 const viewOriginalPost = (previewId: number) => {
   console.log(`查看拍摄预告原文，ID: ${previewId}`);
   // 实际开发时此处添加路由跳转逻辑
 };
 
-// 日期格式化函数
-const formatMonth = (date: Date) => {
-  return date.getMonth() + 1 + '月';
-};
+// 模拟获取天气数据
+const fetchWeatherData = () => {
+  const today = new Date();
+  const weatherConditions = ['sunny', 'partly-cloudy', 'cloudy', 'rainy', 'thunderstorm'];
+  const weatherIcons = ['sun', 'cloud-sun', 'cloud', 'cloud-rain', 'cloud-lightning'];
 
-const formatDay = (date: Date) => {
-  return date.getDate();
-};
+  // 为未来7天生成模拟天气数据
+  const weatherForecasts: WeatherInfo[] = [];
 
-const formatWeekday = (date: Date) => {
-  const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-  return weekdays[date.getDay()];
-};
+  for (let i = 0; i < 15; i++) {
+    const forecastDate = new Date(today);
+    forecastDate.setDate(today.getDate() + i);
 
-const formatTimeRange = (start: Date, end: Date) => {
-  const startHour = start.getHours().toString().padStart(2, '0');
-  const startMin = start.getMinutes().toString().padStart(2, '0');
-  const endHour = end.getHours().toString().padStart(2, '0');
-  const endMin = end.getMinutes().toString().padStart(2, '0');
+    const conditionIndex = Math.floor(Math.random() * weatherConditions.length);
+    const lowTemp = Math.floor(Math.random() * 10) + 15; // 15-25°C
+    const highTemp = lowTemp + Math.floor(Math.random() * 10); // 低温+0-10°C
 
-  return `${startHour}:${startMin} - ${endHour}:${endMin}`;
-};
+    weatherForecasts.push({
+      date: forecastDate,
+      condition: weatherConditions[conditionIndex],
+      temperature: {
+        low: lowTemp,
+        high: highTemp
+      },
+      icon: weatherIcons[conditionIndex]
+    });
+  }
 
-const formatModalDate = (date: Date) => {
-  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${formatWeekday(date)}`;
+  weatherData.value = weatherForecasts;
 };
 
 onMounted(() => {
+  // 获取天气数据
+  fetchWeatherData();
+
   // 模拟加载数据
   setTimeout(() => {
     // 生成模拟数据 - 未来7天的拍摄计划
     const today = new Date();
     const previewData: PreviewItem[] = [];
 
-    // 添加一些模拟数据
+    // 添加一些模拟数据 - 添加来源和社交媒体信息
     // 第一天 - 多个摄影师在同一地点
     previewData.push({
       id: 1,
@@ -442,7 +295,14 @@ onMounted(() => {
       photographerId: 1,
       photographerName: '张舜元',
       description: '妙峰山风景区沿途光线充足，适合拍摄骑行者攀爬山路的英姿。装备推荐：轻便骑行服，明亮色系便于突出照片效果。',
-      isFeatured: true
+      isFeatured: true,
+      source: 'platform',
+      sourceLabel: '瞬影发布',
+      articleId: 101,
+      socialMediaLinks: [
+        { platform: 'weibo', url: 'https://weibo.com/u/zhangshunyuan', username: '张舜元_影像日记' },
+        { platform: 'xiaohongshu', url: 'https://xiaohongshu.com/user/zhangshunyuan', username: '张舜元摄影' }
+      ]
     });
 
     // 同一地点，时间重叠
@@ -453,7 +313,14 @@ onMounted(() => {
       endTime: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1, 13, 0),
       photographerId: 3,
       photographerName: '王睿杰',
-      description: '妙峰山中段有绝佳拍摄点，可捕捉骑行者在山路S弯攀爬的瞬间。适合高难度技术动作的拍摄。'
+      description: '妙峰山中段有绝佳拍摄点，可捕捉骑行者在山路S弯攀爬的瞬间。适合高难度技术动作的拍摄。',
+      source: 'xiaohongshu',
+      sourceLabel: '小红书发布',
+      originalPostUrl: 'https://xiaohongshu.com/post/123456',
+      socialMediaLinks: [
+        { platform: 'xiaohongshu', url: 'https://xiaohongshu.com/user/wangruijie', username: '王睿杰' },
+        { platform: 'instagram', url: 'https://instagram.com/ruijiewang', username: '@ruijiewang' }
+      ]
     });
 
     // 同一地点，下午场次
@@ -464,7 +331,12 @@ onMounted(() => {
       endTime: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1, 17, 30),
       photographerId: 2,
       photographerName: '李明阳',
-      description: '下午光线偏斜，特别适合拍摄剪影效果。拍摄侧重：下坡技术动作、速降姿态。'
+      description: '下午光线偏斜，特别适合拍摄剪影效果。拍摄侧重：下坡技术动作、速降姿态。',
+      source: 'friendlybusinessman',
+      sourceLabel: '友商平台',
+      socialMediaLinks: [
+        { platform: 'weibo', url: 'https://weibo.com/u/liminyang', username: '李明阳摄影' }
+      ]
     });
 
     // 第一天，不同地点
@@ -475,7 +347,14 @@ onMounted(() => {
       endTime: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1, 11, 30),
       photographerId: 4,
       photographerName: '陈思远',
-      description: '百花山环道景色优美，能拍摄到绝美的山景背景和骑行者构图。路段平缓，适合拍摄轻松愉快的骑行氛围。'
+      description: '百花山环道景色优美，能拍摄到绝美的山景背景和骑行者构图。路段平缓，适合拍摄轻松愉快的骑行氛围。',
+      source: 'platform',
+      sourceLabel: '瞬影发布',
+      articleId: 102,
+      socialMediaLinks: [
+        { platform: 'xiaohongshu', url: 'https://xiaohongshu.com/user/chensiyuan', username: '陈思远FOTO' },
+        { platform: 'weibo', url: 'https://weibo.com/u/chensiyuan', username: '陈思远影像' }
+      ]
     });
 
     // 第二天
@@ -487,7 +366,14 @@ onMounted(() => {
       photographerId: 2,
       photographerName: '李明阳',
       description: '戒台寺入口处拍摄，光线较好，建议骑行者上午前往。背景有古建筑元素，可拍摄传统与现代结合的画面。',
-      isFeatured: true
+      isFeatured: true,
+      source: 'platform',
+      sourceLabel: '瞬影发布',
+      articleId: 103,
+      socialMediaLinks: [
+        { platform: 'weibo', url: 'https://weibo.com/u/liminyang', username: '李明阳摄影' },
+        { platform: 'instagram', url: 'https://instagram.com/leeming', username: '@leeming' }
+      ]
     });
 
     // 第二天，同地点不同摄影师
@@ -498,7 +384,12 @@ onMounted(() => {
       endTime: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2, 14, 0),
       photographerId: 1,
       photographerName: '张舜元',
-      description: '戒台寺地区光线变化丰富，可拍摄明暗对比强烈的骑行照片。主要拍摄地点：寺院东侧山路。'
+      description: '戒台寺地区光线变化丰富，可拍摄明暗对比强烈的骑行照片。主要拍摄地点：寺院东侧山路。',
+      source: 'other',
+      sourceLabel: '自主发布',
+      socialMediaLinks: [
+        { platform: 'weibo', url: 'https://weibo.com/u/zhangshunyuan', username: '张舜元_影像日记' }
+      ]
     });
 
     // 第四天
@@ -509,7 +400,13 @@ onMounted(() => {
       endTime: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 4, 18, 0),
       photographerId: 1,
       photographerName: '张舜元',
-      description: '傍晚拍摄，光线温暖，适合拍摄环境人文和骑行团队合作的照片。备注：路段拐弯较多，可拍摄骑行者过弯技术动作。'
+      description: '傍晚拍摄，光线温暖，适合拍摄环境人文和骑行团队合作的照片。备注：路段拐弯较多，可拍摄骑行者过弯技术动作。',
+      source: 'xiaohongshu',
+      sourceLabel: '小红书发布',
+      originalPostUrl: 'https://xiaohongshu.com/post/654321',
+      socialMediaLinks: [
+        { platform: 'xiaohongshu', url: 'https://xiaohongshu.com/user/zhangshunyuan', username: '张舜元摄影' }
+      ]
     });
 
     // 远期预告
@@ -521,7 +418,13 @@ onMounted(() => {
       photographerId: 4,
       photographerName: '陈思远',
       description: '秋季云蒙山特别拍摄活动，适合拍摄秋日红叶中的骑行场景。限定人数：60人，需提前预约。',
-      isFeatured: true
+      isFeatured: true,
+      source: 'platform',
+      sourceLabel: '瞬影发布',
+      articleId: 104,
+      socialMediaLinks: [
+        { platform: 'xiaohongshu', url: 'https://xiaohongshu.com/user/chensiyuan', username: '陈思远FOTO' }
+      ]
     });
 
     // 本月底
@@ -533,7 +436,14 @@ onMounted(() => {
       photographerId: 3,
       photographerName: '王睿杰',
       description: '月末特别活动：环湖骑行全程拍摄。全天候跟拍，可获得系列连贯照片，展现完整骑行故事。需提前报名。',
-      isFeatured: true
+      isFeatured: true,
+      source: 'platform',
+      sourceLabel: '瞬影发布',
+      articleId: 105,
+      socialMediaLinks: [
+        { platform: 'xiaohongshu', url: 'https://xiaohongshu.com/user/wangruijie', username: '王睿杰' },
+        { platform: 'instagram', url: 'https://instagram.com/ruijiewang', username: '@ruijiewang' }
+      ]
     });
 
     // 按日期排序

@@ -9,7 +9,7 @@
             <path d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.63 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16Z"
                   stroke="#9966FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           </svg>
-          <span v-if="hasImportantNotifications || unreadMessages > 0" class="notification-badge with-count">{{ totalUnreadCount }}</span>
+          <span v-if="hasImportantNotifications || messagesUnreadCount > 0" class="notification-badge with-count">{{ totalUnreadCount }}</span>
           <span v-else-if="hasNotifications" class="notification-badge dot-only"></span>
         </div>
       </div>
@@ -197,6 +197,7 @@ import { useAuth } from '@/composables/useAuth';
 // import { useToast } from '@/composables/useToast';
 import LoginModal from '@/components/LoginModal.vue';
 import { useNotifications } from '@/composables/useNotifications';
+import { useMessages } from '@/composables/useMessages';
 import '@/assets/styles/notification-indicator.css';
 import '@/assets/styles/profileView.css';
 
@@ -209,14 +210,15 @@ const {
   hasUnreadImportant: hasImportantNotifications
 } = useNotifications();
 
+// 使用全局消息状态
+const messages = useMessages();
+const messagesUnreadCount = computed(() => messages.unreadCount.value);
+
 // 登录模态框控制
 const showLoginModal = ref(false);
 
-// 模拟未读消息数
-const unreadMessages = 1; // 实际项目中应该从useMessages或API获取
-
 // 计算总未读数
-const totalUnreadCount = computed(() => unreadNotificationsCount.value + unreadMessages);
+const totalUnreadCount = computed(() => unreadNotificationsCount.value + messagesUnreadCount.value);
 
 // 导航方法
 const navigateTo = (path: string) => {

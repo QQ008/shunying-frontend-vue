@@ -77,7 +77,7 @@
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22Z" stroke="#9966FF" stroke-width="1.5"/>
           </svg>
-          <span v-if="unreadMessagesCount > 0" class="category-badge">{{ unreadMessagesCount }}</span>
+          <span v-if="messagesUnreadCount > 0" class="category-badge">{{ messagesUnreadCount }}</span>
         </div>
         <div class="category-name">消息</div>
       </div>
@@ -129,7 +129,7 @@
       </div>
 
       <!-- 消息对话列表 -->
-      <div v-if="conversations.length === 0" class="empty-state">
+      <div v-if="messagesList.length === 0" class="empty-state">
         <div class="empty-icon">
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22Z" stroke="#CCCCCC" stroke-width="1.5" fill="#EFEFEF"/>
@@ -143,7 +143,7 @@
 
       <div v-else class="chat-list">
         <div
-          v-for="chat in conversations"
+          v-for="chat in messagesList"
           :key="chat.id"
           class="chat-item"
           @click="navigateToChat(chat.id.toString())"
@@ -154,7 +154,7 @@
           <div class="chat-content">
             <div class="chat-top">
               <h3 class="chat-name">{{ chat.name }}</h3>
-              <span class="chat-time">{{ formatChatTime(chat.lastTime) }}</span>
+              <span class="chat-time">{{ messages.formatChatTime(chat.lastTime) }}</span>
             </div>
             <p class="chat-preview">{{ chat.lastMessage }}</p>
           </div>
@@ -310,8 +310,8 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useNotifications } from '@/composables/useNotifications';
-import { formatDistance } from 'date-fns';
-import { zhCN } from 'date-fns/locale';
+import { useMessages } from '@/composables/useMessages';
+import type { Conversation } from '@/composables/useMessages';
 import '@/assets/styles/notifications.css';
 // import '@/assets/styles/messages.css';
 
@@ -324,8 +324,16 @@ const {
   getUnreadCountByType
 } = useNotifications();
 
+// 使用全局消息状态
+const messages = useMessages();
+
 // 标签页定义
 const activeTab = ref('all');
+
+// 计算消息列表，确保类型安全
+const messagesList = computed<Conversation[]>(() => {
+  return messages.conversations.value;
+});
 
 // 计算活动标签页名称
 const activeTabName = computed(() => {
@@ -375,10 +383,13 @@ const earlierNotifications = computed(() => {
   });
 });
 
+// 从消息系统获取未读消息数
+const messagesUnreadCount = computed(() => messages.unreadCount.value);
+
 // 获取未读消息数量
 const getUnreadCount = (tabId: string) => {
   if (tabId === 'messages') {
-    return unreadMessagesCount.value;
+    return messagesUnreadCount.value;
   }
   return getUnreadCountByType(tabId as 'system' | 'order' | 'activity' | 'all');
 };
@@ -389,54 +400,18 @@ const readNotification = (notification: import('@/composables/useNotifications')
   // 这里可以添加跳转到详情页的逻辑，或者弹出详情模态框
 };
 
-// 模拟对话数据
-interface Conversation {
-  id: number;
-  name: string;
-  avatar: string;
-  lastMessage: string;
-  lastTime: string;
-  unreadCount: number;
-}
-
-const conversations = ref<Conversation[]>([
-  {
-    id: 1,
-    name: '客服小瞬',
-    avatar: 'https://via.placeholder.com/48/9966FF/FFFFFF/?text=小瞬',
-    lastMessage: '您好，有什么可以帮助您的吗？',
-    lastTime: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
-    unreadCount: 1
-  },
-  {
-    id: 2,
-    name: '张摄影师',
-    avatar: 'https://via.placeholder.com/48/FF6600/FFFFFF/?text=张',
-    lastMessage: '您的照片已经修好了，请查收',
-    lastTime: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
-    unreadCount: 0
-  }
-]);
-
-// 计算未读消息总数
-const unreadMessagesCount = computed(() => {
-  return conversations.value.reduce((total, chat) => total + chat.unreadCount, 0);
-});
-
-// 格式化聊天时间
-const formatChatTime = (timeString: string) => {
-  const date = new Date(timeString);
-  return formatDistance(date, new Date(), { addSuffix: false, locale: zhCN });
-};
-
 // 导航到聊天页面
 const navigateToChat = (chatId: string) => {
+  // 如果是数字ID的对话，标记为已读
+  if (!isNaN(Number(chatId))) {
+    messages.markConversationAsRead(Number(chatId));
+  }
   router.push(`/chat/${chatId}`);
 };
 
 // 组件挂载时
 onMounted(() => {
   // 在实际项目中，这里应该从API获取最新通知和消息数据
-  // 例如：fetchNotifications();  fetchConversations();
+  // 但现在我们已经在composables中实现了自动初始化
 });
 </script>

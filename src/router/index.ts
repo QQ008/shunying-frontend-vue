@@ -56,6 +56,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'about',
     component: () => import('@/views/AboutView.vue'),
     meta: { title: '关于瞬影', hideTabBar: true }
+  },
+  {
+    path: '/profile/feedback',
+    name: 'feedback',
+    component: () => import('@/views/FeedbackView.vue'),
+    meta: { title: '意见反馈', hideTabBar: true }
   }
 ]
 
