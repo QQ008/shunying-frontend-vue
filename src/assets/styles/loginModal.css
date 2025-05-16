@@ -1,0 +1,739 @@
+/* 登录弹窗样式 */
+.login-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
+  animation: modalFadeIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.login-modal.closing {
+  animation: modalFadeOut 0.2s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+.login-modal .modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(4px);
+  animation: backdropFadeIn 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.login-modal.closing .modal-backdrop {
+  animation: backdropFadeOut 0.2s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+.login-modal .modal-content {
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 20px;
+  position: relative;
+  z-index: 1001;
+  animation: slideUpIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  max-width: 400px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15),
+              0 5px 15px rgba(153, 102, 255, 0.07);
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.login-modal.closing .modal-content {
+  animation: slideDownOut 0.25s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+.login-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 26px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(250, 247, 255, 1));
+}
+
+.login-modal .modal-header h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: -0.3px;
+  background: linear-gradient(120deg, #9966FF, #7742e6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-modal .close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s;
+  margin-right: -6px;
+}
+
+.login-modal .close-btn:hover {
+  background-color: rgba(153, 102, 255, 0.08);
+}
+
+.login-modal .modal-body {
+  padding: 28px 30px 36px;
+  background: linear-gradient(to bottom, #ffffff, #fafafa);
+}
+
+/* 手机号登录表单 */
+.login-modal .phone-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.login-modal .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  min-height: 62px;
+}
+
+.login-modal .input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.5);
+  height: 52px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.login-modal .input-wrapper:focus-within {
+  border-color: #9966FF;
+  box-shadow: 0 0 0 3px rgba(153, 102, 255, 0.12);
+  background-color: #fff;
+  transform: translateY(-1px);
+}
+
+.login-modal .input-prefix {
+  padding: 0 15px;
+  font-size: 15px;
+  color: #333;
+  background-color: #f5f5f5;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid #ececec;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.login-modal .phone-input,
+.login-modal .verification-input {
+  flex: 1;
+  height: 52px;
+  padding: 0 20px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background-color: transparent;
+  color: #333;
+}
+
+.login-modal .phone-input::placeholder,
+.login-modal .verification-input::placeholder {
+  color: #aaa;
+  transition: color 0.2s;
+}
+
+.login-modal .input-wrapper:focus-within .phone-input::placeholder,
+.login-modal .input-wrapper:focus-within .verification-input::placeholder {
+  color: #bbb;
+}
+
+.login-modal .verification-code-wrapper {
+  position: relative;
+}
+
+.login-modal .send-code-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #9966FF, #8855ee);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 14px;
+  min-width: 90px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(153, 102, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-modal .send-code-btn:hover {
+  background: linear-gradient(135deg, #8855ee, #7745da);
+  box-shadow: 0 4px 8px rgba(153, 102, 255, 0.3);
+  transform: translateY(-52%);
+}
+
+.login-modal .send-code-btn:active {
+  transform: translateY(-48%);
+  box-shadow: 0 2px 4px rgba(153, 102, 255, 0.2);
+}
+
+.login-modal .send-code-btn.counting {
+  background: #e0e0e0;
+  color: #999;
+  box-shadow: none;
+}
+
+.login-modal .send-code-loading {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+  margin-right: 6px;
+}
+
+.login-modal .error-message {
+  color: #ff4d4f;
+  font-size: 13px;
+  margin-top: 6px;
+  position: absolute;
+  bottom: -22px;
+  left: 2px;
+  opacity: 0;
+  animation: fadeInUp 0.3s forwards;
+}
+
+/* 协议勾选 */
+.login-modal .agreement-wrapper {
+  margin: 4px 0;
+}
+
+.login-modal .checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  cursor: pointer;
+  font-size: 12px;
+  user-select: none;
+  padding-left: 24px;
+  color: #999;
+  max-width: 90%;
+}
+
+.login-modal .checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.login-modal .checkmark {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: #f5f5f5;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 增大可点击区域 */
+.login-modal .checkbox-container::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+}
+
+.login-modal .checkbox-container:hover input ~ .checkmark {
+  background-color: #f0f0f0;
+  border-color: #bbb;
+}
+
+.login-modal .checkbox-container input:checked ~ .checkmark {
+  background: linear-gradient(135deg, #9966FF, #8855ee);
+  border-color: #9966FF;
+  box-shadow: 0 1px 3px rgba(153, 102, 255, 0.3);
+}
+
+.login-modal .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.login-modal .checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.login-modal .checkbox-container .checkmark:after {
+  left: 5px;
+  top: 2px;
+  width: 3px;
+  height: 7px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.login-modal .agreement-label {
+  line-height: 1.5;
+}
+
+.login-modal .agreement-label a {
+  color: #9966FF;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+.login-modal .agreement-label a::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #9966FF;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.login-modal .agreement-label a:hover::after {
+  opacity: 1;
+}
+
+.login-modal .login-submit-btn {
+  height: 52px;
+  background: linear-gradient(135deg, #9966FF, #8855ee);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  max-width: 306px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 12px rgba(153, 102, 255, 0.15);
+  letter-spacing: 2px;
+}
+
+.login-modal .login-submit-btn:hover {
+  background: linear-gradient(135deg, #8855ee, #7745da);
+  box-shadow: 0 6px 15px rgba(153, 102, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.login-modal .login-submit-btn:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.login-modal .login-submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(153, 102, 255, 0.15);
+}
+
+.login-modal .login-submit-btn:hover:disabled {
+  transform: none;
+  box-shadow: 0 4px 12px rgba(153, 102, 255, 0.15);
+}
+
+/* 分隔线 */
+.login-modal .divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0 20px;
+  color: #999;
+  font-size: 14px;
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-modal .divider::before,
+.login-modal .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03), rgba(153, 102, 255, 0.15), rgba(0, 0, 0, 0.03));
+}
+
+.login-modal .divider span {
+  padding: 0 16px;
+  color: #888;
+  font-size: 13px;
+}
+
+/* 其他登录方式 */
+.login-modal .alternate-login-methods {
+  display: flex;
+  justify-content: flex-start;
+  max-width: 340px;
+  margin: 0 auto;
+  padding-left: 6px;
+}
+
+.login-modal .wechat-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #07C160;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(7, 193, 96, 0.15);
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.login-modal .wechat-login-btn:disabled {
+  border-color: #8fcdab;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.7;
+  background: transparent;
+}
+
+.login-modal .wechat-login-btn:hover {
+  box-shadow: 0 5px 12px rgba(7, 193, 96, 0.25);
+  transform: translateY(-2px);
+  border-color: #06ad53;
+  background: transparent;
+}
+
+.login-modal .wechat-login-btn img {
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.login-modal .wechat-login-btn:hover:disabled {
+  transform: none;
+  border-color: #8fcdab;
+  box-shadow: none;
+  background: transparent;
+}
+
+.login-modal .wechat-login-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(7, 193, 96, 0.15);
+}
+
+/* 页脚 */
+.login-modal .modal-footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.login-modal .help-text {
+  font-size: 13px;
+  color: #999;
+}
+
+/* 协议弹窗 */
+.login-modal.agreement-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  animation: none;
+}
+
+.login-modal .agreement-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+  z-index: 1201;
+}
+
+.login-modal .agreement-modal-content {
+  width: 90%;
+  max-width: 360px;
+  background-color: white;
+  border-radius: 16px;
+  position: relative;
+  z-index: 1202;
+  animation: zoomIn 0.3s ease;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2),
+              0 5px 15px rgba(153, 102, 255, 0.1);
+  overflow: hidden;
+}
+
+.login-modal .agreement-modal-header {
+  padding: 22px 24px 12px;
+  text-align: center;
+  background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(250, 247, 255, 1));
+}
+
+.login-modal .agreement-modal-header h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  background: linear-gradient(120deg, #9966FF, #7742e6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-modal .agreement-modal-body {
+  padding: 12px 24px 24px;
+  text-align: center;
+}
+
+.login-modal .agreement-modal-body p {
+  margin: 0;
+  color: #666;
+  line-height: 1.6;
+}
+
+.login-modal .agreement-modal-footer {
+  display: flex;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.login-modal .cancel-btn,
+.login-modal .confirm-btn {
+  flex: 1;
+  padding: 16px 0;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background: none;
+  transition: all 0.3s;
+}
+
+.login-modal .cancel-btn {
+  color: #666;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 0 0 0 16px;
+}
+
+.login-modal .confirm-btn {
+  color: white;
+  font-weight: 500;
+  border-radius: 0 0 16px 0;
+  background: linear-gradient(135deg, #9966FF, #8855ee);
+}
+
+.login-modal .cancel-btn:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.login-modal .confirm-btn:hover {
+  background: linear-gradient(135deg, #8855ee, #7745da);
+}
+
+/* 加载动画 */
+.login-modal .loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* 动画关键帧 */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+}
+
+@keyframes backdropFadeOut {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+}
+
+@keyframes slideUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDownOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+  .login-modal .modal-content {
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: 20px 20px 0 0;
+    margin-top: auto;
+    animation: mobileSlideUpIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .login-modal.closing .modal-content {
+    animation: mobileSlideDownOut 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+  }
+
+  @keyframes mobileSlideUpIn {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes mobileSlideDownOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  .login-modal .modal-header {
+    padding: 18px 22px;
+  }
+
+  .login-modal .modal-body {
+    padding: 24px 22px 30px;
+  }
+
+  .login-modal .phone-login-form {
+    max-width: 100%;
+  }
+
+  .login-modal .login-submit-btn,
+  .login-modal .divider {
+    max-width: 100%;
+  }
+
+  .login-modal .modal-footer {
+    margin-top: 16px;
+  }
+}

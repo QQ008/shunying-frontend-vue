@@ -33,7 +33,7 @@ const mockLoggedInUserInfo: UserInfo = {
   points: 580,
   coupons: 3,
   favoriteCount: 12,
-  phone: '138****1234',
+  phone: '157****7302',
   email: 'user@example.com'
 };
 
@@ -112,7 +112,7 @@ export function useAuth() {
       await new Promise(resolve => setTimeout(resolve, 800));
 
       // 模拟验证码检查 (实际项目中会通过API验证)
-      if (code !== '1234') {
+      if (code !== '123456') {
         loginError.value = '验证码错误';
         return false;
       }

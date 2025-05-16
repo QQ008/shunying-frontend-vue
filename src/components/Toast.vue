@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineExpose } from 'vue';
+import { ref } from 'vue';
 
 // 组件名应该是多词，这里使用ToastMessage
 defineOptions({

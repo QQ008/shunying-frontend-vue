@@ -726,19 +726,19 @@ const teamMembers = [
     avatar: 'https://via.placeholder.com/80/9966FF/FFFFFF/?text=赵'
   },
   {
-    name: '李明',
+    name: '王不存在',
     role: '技术总监',
     description: '人工智能专家，负责平台的图像识别和智能处理算法，让照片分组和搜索更精准。',
     avatar: 'https://via.placeholder.com/80/9966FF/FFFFFF/?text=李'
   },
   {
-    name: '张雨',
+    name: '李不存在',
     role: '产品设计师',
     description: '专注用户体验设计，热爱摄影与设计，为瞬影打造流畅直观的界面体验。',
     avatar: 'https://via.placeholder.com/80/9966FF/FFFFFF/?text=张'
   },
   {
-    name: '王磊',
+    name: '赵不存在',
     role: '市场总监',
     description: '资深营销专家，曾服务多家体育科技企业，负责瞬影的市场推广和摄影师招募。',
     avatar: 'https://via.placeholder.com/80/9966FF/FFFFFF/?text=王'

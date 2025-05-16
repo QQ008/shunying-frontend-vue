@@ -62,6 +62,18 @@ const routes: Array<RouteRecordRaw> = [
     name: 'feedback',
     component: () => import('@/views/FeedbackView.vue'),
     meta: { title: '意见反馈', hideTabBar: true }
+  },
+  {
+    path: '/profile/coupons',
+    name: 'coupons',
+    component: () => import('@/views/CouponsView.vue'),
+    meta: { title: '我的优惠', hideTabBar: true }
+  },
+  {
+    path: '/profile/edit',
+    name: 'profile-edit',
+    component: () => import('@/views/ProfileEditView.vue'),
+    meta: { title: '编辑资料', hideTabBar: true }
   }
 ]
 

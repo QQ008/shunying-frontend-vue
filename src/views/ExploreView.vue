@@ -80,7 +80,7 @@ const auth = useAuth();
 
 // 处理手机号登录
 const handleLogin = async () => {
-  const success = await auth.loginWithPhone('13800138000', '1234');
+  const success = await auth.loginWithPhone('15701167302', '123456');
   if (success) {
     toast.show('登录成功');
   } else {

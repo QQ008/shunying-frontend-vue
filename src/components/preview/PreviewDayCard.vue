@@ -115,8 +115,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
-
 interface SocialMedia {
   platform: string; // instagram, weibo, xiaohongshu, etc.
   url: string;
