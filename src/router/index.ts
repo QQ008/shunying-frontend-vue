@@ -70,10 +70,34 @@ const routes: Array<RouteRecordRaw> = [
     meta: { title: '我的优惠', hideTabBar: true }
   },
   {
+    path: '/profile/points',
+    name: 'points',
+    component: () => import('@/views/PointsView.vue'),
+    meta: { title: '我的积分', hideTabBar: true }
+  },
+  {
     path: '/profile/edit',
     name: 'profile-edit',
     component: () => import('@/views/ProfileEditView.vue'),
     meta: { title: '编辑资料', hideTabBar: true }
+  },
+  {
+    path: '/profile/orders',
+    name: 'orders',
+    component: () => import('@/views/OrdersView.vue'),
+    meta: { title: '我的订单', hideTabBar: true }
+  },
+  {
+    path: '/profile/orders/:id',
+    name: 'order-detail',
+    component: () => import('@/views/OrderDetailView.vue'),
+    meta: { title: '订单详情', hideTabBar: true }
+  },
+  {
+    path: '/photographer/:id',
+    name: 'photographer-detail',
+    component: () => import('@/views/PhotographerView.vue'),
+    meta: { title: '摄影师详情', hideTabBar: true }
   }
 ]
 

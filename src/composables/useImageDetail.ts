@@ -232,7 +232,7 @@ export default function useImageDetail() {
     if (currentPhoto.value.photographer?.id) {
       // 模拟跳转
       alert(`跳转到摄影师 ${currentPhoto.value.photographer.name} 的主页`)
-      // router.push(`/photographer/${currentPhoto.value.photographer.id}`)
+      router.push(`/photographer/${currentPhoto.value.photographer.id}`)
     }
   }
 
